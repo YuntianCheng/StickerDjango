@@ -15,7 +15,11 @@
           <div ref="main" style="margin-top: 20px">
             <el-row type="flex" justify="center">
               <el-col :span="16">
-                <el-tabs v-model="activeTab" v-if="active == 1" @tab-click="handleTab">
+                <el-tabs
+                  v-model="activeTab"
+                  v-if="active == 1"
+                  @tab-click="handleTab"
+                >
                   <el-tab-pane name="file" label="上传照片">
                     <photograph
                       v-model="headImage"
@@ -30,8 +34,7 @@
                           :width="videoWidth"
                           :height="videoHeight"
                           autoplay
-                        >
-                        </video>
+                        ></video>
                         <canvas
                           style="display: none"
                           id="canvasCamera"
@@ -51,8 +54,13 @@
                       </el-col>
                       <el-col>
                         <div class="img_bg_camera">
-                          <img :src="imgSrc" alt="" width="videoWidth"
-                          height="videoHeight" class="tx_img" />
+                          <img
+                            :src="imgSrc"
+                            alt=""
+                            width="videoWidth"
+                            height="videoHeight"
+                            class="tx_img"
+                          />
                         </div>
                       </el-col>
                       <!-- <el-col :span="4">
@@ -142,6 +150,7 @@
             @click="
               () => {
                 this.active = 1;
+                this.activeTab='file'
               }
             "
             >重新开始</el-button
@@ -202,7 +211,7 @@ export default {
       this.disabled = false;
       this.next = false;
       this.select = row.imgIndex;
-      this.description = des[row.imgIndex];
+      this.description = des[row.imgIndex - 1];
     },
     Init() {
       const config = {
@@ -244,7 +253,7 @@ export default {
       if (this.active == 3) {
         this.handleFace();
       }
-      console.log(this.headImage)
+      console.log(this.headImage);
     },
     preStep() {
       if (this.active == 2) {
@@ -328,9 +337,11 @@ export default {
         _this.videoWidth,
         _this.videoHeight
       );
-      this.thisCancas.toBlob(b=>{this.headImage=b},"image/jpeg");
-      let image = this.thisCancas.toDataURL("image/jpeg")
-      _this.imgSrc = image
+      this.thisCancas.toBlob((b) => {
+        this.headImage = b;
+      }, "image/jpeg");
+      let image = this.thisCancas.toDataURL("image/jpeg");
+      _this.imgSrc = image;
       //_this.headImage = image
       _this.next = false;
     },

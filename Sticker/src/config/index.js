@@ -1,6 +1,5 @@
 /* eslint-disable */
 const baseUrl = {
-  // dev: 'https://api.escience.org.cn',
   dev: '',
   pro: ''
 };
